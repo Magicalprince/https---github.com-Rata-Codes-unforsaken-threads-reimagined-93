@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,11 +8,13 @@ import CollectionBanner from "@/components/CollectionBanner";
 import CharitySection from "@/components/CharitySection";
 import Newsletter from "@/components/Newsletter";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [showLoading, setShowLoading] = useState(true);
   const [loadingCompleted, setLoadingCompleted] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   // Skip loading screen if the page is refreshed (using sessionStorage)
   useEffect(() => {
@@ -41,7 +42,7 @@ const Index = () => {
       
       {/* Hero Section */}
       {!isMobile ? (
-        <VideoBackground videoSrc="https://res.cloudinary.com/dgbv7qyir/video/upload/v1747583794/2516162-hd_1920_1080_24fps_iasv6w.mp4" />
+        <VideoBackground videoSrc="https://res.cloudinary.com/dgbv7qyir/video/upload/v1747648499/5699539-uhd_3840_2160_24fps_gcerg4.mp4" />
       ) : (
         <div className="h-screen flex items-center justify-center bg-black">
           <div className="text-center text-white px-4">
@@ -52,6 +53,7 @@ const Index = () => {
             <button 
               className="px-8 py-3 bg-white text-black uppercase tracking-wider font-medium animate-slide-in"
               style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}
+              onClick={() => navigate("/shop")}
             >
               Shop Now
             </button>

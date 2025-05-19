@@ -128,6 +128,7 @@ const Checkout = () => {
         Products: formatProductsString(cartItems),
         TotalAmount: Number(total),
         CID: user.fields.CID,
+        TotalQuantity: cartItems.reduce((sum, item) => sum + item.quantity, 0),
       };
       
       console.log("Creating order with data:", orderData);

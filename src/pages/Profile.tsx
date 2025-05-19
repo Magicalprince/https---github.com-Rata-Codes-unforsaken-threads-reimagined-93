@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { getOrdersByCustomerId, Order } from "@/lib/airtable";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "@/components/ui/use-toast";
 
 const Profile = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -102,7 +103,9 @@ const Profile = () => {
                   </div>
                 </div>
                 
-                <Button variant="outline" className="mt-6 w-full">Edit Profile</Button>
+                <Button variant="outline" className="mt-6 w-full" onClick={() => navigate("/edit-profile")}>
+                  Edit Profile
+                </Button>
               </Card>
             </div>
             

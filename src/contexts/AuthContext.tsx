@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getCustomerByUsername, Customer } from "@/lib/airtable";
 import { useToast } from "@/components/ui/use-toast";
@@ -32,11 +31,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const isAdmin = isAuthenticated && user?.fields?.Username === "admincontrol@5678";
 
   useEffect(() => {
-    // Check for stored auth on mount
+    setIsLoading(false);
+  }, []);
+
+  // Re-add localStorage persistence for non-admin users
+  useEffect(() => {
     const storedUser = localStorage.getItem("tbeUser");
     if (storedUser) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        // Only load from localStorage if NOT the admin user
+        if (parsedUser?.fields?.Username !== "admincontrol@5678") {
+          setUser(parsedUser);
+        } else {
+          // If it's the admin user stored, remove it to prevent auto-login
+          localStorage.removeItem("tbeUser");
+        }
       } catch (error) {
         console.error("Failed to parse stored user:", error);
         localStorage.removeItem("tbeUser");
@@ -59,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         };
         setUser(adminUser);
-        localStorage.setItem("tbeUser", JSON.stringify(adminUser));
+        // Do NOT save admin user to localStorage for auto-login prevention
         toast({ 
           title: "Welcome Admin", 
           description: "You've successfully logged in as admin." 
@@ -72,6 +82,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (foundUser && foundUser.fields && foundUser.fields.Password === password) {
         setUser(foundUser);
+        // Save non-admin user to localStorage
         localStorage.setItem("tbeUser", JSON.stringify(foundUser));
         toast({ 
           title: "Welcome back", 
@@ -101,6 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setUser(null);
+    // Always remove from localStorage on logout
     localStorage.removeItem("tbeUser");
     toast({ 
       title: "Logged out", 

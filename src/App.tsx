@@ -18,6 +18,12 @@ import Profile from "./pages/Profile";
 import CustomerManagement from "./pages/admin/CustomerManagement";
 import OrderManagement from "./pages/admin/OrderManagement";
 import AdminRoute from "./components/AdminRoute";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+import Collections from "./pages/Collections";
+import Sale from "./pages/Sale";
+import About from "./pages/About";
+import EditProfile from "./pages/EditProfile";
 
 const queryClient = new QueryClient();
 
@@ -54,11 +60,17 @@ const AppRoutes = () => (
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/confirmation" element={<OrderConfirmation />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/about" element={<About />} />
       <Route element={<AdminRoute />}>
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/customers" element={<CustomerManagement />} />
         <Route path="/admin/orders" element={<OrderManagement />} />
       </Route>
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/collections" element={<Collections />} />
+      <Route path="/sale" element={<Sale />} />
+      <Route path="/edit-profile" element={<EditProfile />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
