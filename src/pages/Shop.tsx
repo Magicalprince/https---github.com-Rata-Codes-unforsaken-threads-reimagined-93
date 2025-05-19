@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -143,6 +142,15 @@ const carouselProducts = [
 
 type SortOption = "featured" | "price-asc" | "price-desc" | "newest";
 
+// Define a Product type for better type safety
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  imageDefault?: string;
+  [key: string]: unknown;
+}
+
 const Shop = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -189,7 +197,7 @@ const Shop = () => {
   };
 
   // Handle add to cart from grid view
-  const handleGridAddToCart = (product: any, defaultSize = "M") => {
+  const handleGridAddToCart = (product: Product, defaultSize = "M") => {
     addToCart({
       id: product.id,
       name: product.name,

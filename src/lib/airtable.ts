@@ -41,12 +41,12 @@ export interface Order {
 }
 
 // Generic fetch function for Airtable API
-async function fetchFromAirtable(
+async function fetchFromAirtable<T = unknown>(
   baseId: string,
   tableId: string,
   method: string,
   path: string = "",
-  data?: any
+  data?: unknown
 ) {
   try {
     const url = `https://api.airtable.com/v0/${baseId}/${tableId}${path}`;
@@ -70,7 +70,7 @@ async function fetchFromAirtable(
       throw new Error(errorData.error?.message || 'An error occurred');
     }
     
-    return await response.json();
+    return (await response.json()) as T;
   } catch (error) {
     console.error("Airtable API Error:", error);
     toast({
